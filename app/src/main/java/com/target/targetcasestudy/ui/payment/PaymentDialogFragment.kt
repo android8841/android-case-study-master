@@ -26,36 +26,40 @@ import com.target.targetcasestudy.utils.Validators
  */
 class PaymentDialogFragment : DialogFragment() {
 
-  private lateinit var submitButton: Button
-  private lateinit var creditCardInput: EditText
+    private lateinit var submitButton: Button
+    private lateinit var creditCardInput: EditText
 
-  @ExperimentalStdlibApi
-  override fun onCreateView(
-    inflater: LayoutInflater,
-    container: ViewGroup?,
-    savedInstanceState: Bundle?
-  ): View? {
-    val root = inflater.inflate(R.layout.dialog_payment, container, false)
+    @ExperimentalStdlibApi
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val root = inflater.inflate(R.layout.dialog_payment, container, false)
 
-    submitButton = root.findViewById(R.id.submit)
-    creditCardInput = root.findViewById(R.id.card_number)
-    val cancelButton: Button = root.findViewById(R.id.cancel)
+        submitButton = root.findViewById(R.id.submit)
+        creditCardInput = root.findViewById(R.id.card_number)
+        val cancelButton: Button = root.findViewById(R.id.cancel)
 
-    cancelButton.setOnClickListener { dismiss() }
-    submitButton.setOnClickListener { dismiss() }
-    submitButton.isEnabled = false
-    creditCardInput.addTextChangedListener(object : TextWatcher {
-      override fun afterTextChanged(s: Editable?) {
-      }
+        cancelButton.setOnClickListener { dismiss() }
+        submitButton.setOnClickListener { dismiss() }
+        submitButton.isEnabled = false
+        handleCreditCardInputWatcher()
+        return root
+    }
 
-      override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-      }
+    @ExperimentalStdlibApi
+    private fun handleCreditCardInputWatcher() {
+        creditCardInput.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {
+            }
 
-      override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-       submitButton.isEnabled = Validators.validateCreditCard(s.toString())
-      }
-    })
-    return root
-  }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                submitButton.isEnabled = Validators.validateCreditCard(s.toString())
+            }
+        })
+    }
 }

@@ -45,7 +45,7 @@ class DealListFragment : Fragment() {
     }
 
 
-    /* listening the countries data.
+    /* listening the deals data.
     Also in case of error show an error and retry button*/
     private fun setupObservers() {
         viewModel.deals.observe(viewLifecycleOwner, Observer {

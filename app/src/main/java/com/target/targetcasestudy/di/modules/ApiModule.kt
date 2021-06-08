@@ -19,7 +19,7 @@ import javax.inject.Singleton
 @InstallIn(ApplicationComponent::class)
 object ApiModule {
 
-    private const val BASE_URL_COUNTRY_SERVICE = "https://api.target.com/"
+    private const val BASE_URL_DEALS_SERVICE = "https://api.target.com/"
 
     @Singleton
     @Provides
@@ -35,7 +35,7 @@ object ApiModule {
         gson: Gson,
         okHttpClient: OkHttpClient
     ): Retrofit {
-        return Retrofit.Builder().baseUrl(BASE_URL_COUNTRY_SERVICE)
+        return Retrofit.Builder().baseUrl(BASE_URL_DEALS_SERVICE)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
@@ -57,9 +57,9 @@ object ApiModule {
     @Singleton
     @Provides
     fun provideDealsRepository(
-        countryApiService: DealsAPIService,
+        dealsApiService: DealsAPIService,
         databaseHelper: DatabaseHelper
     ): DealsRepository {
-        return DealsRepository(countryApiService, databaseHelper)
+        return DealsRepository(dealsApiService, databaseHelper)
     }
 }
